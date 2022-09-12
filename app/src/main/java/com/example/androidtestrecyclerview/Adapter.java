@@ -13,6 +13,11 @@ import java.util.ArrayList;
 public class Adapter extends RecyclerView.Adapter<Adapter.TempViewHolder> {
 
     private ArrayList<String> strings = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public void setStrings(ArrayList<String> strings) {
         this.strings = strings;
@@ -33,6 +38,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TempViewHolder> {
     public void onBindViewHolder(TempViewHolder holder, int position) {
         String string = strings.get(position);
         holder.textView.setText(string);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClickListener != null) {
+                    onItemClickListener.OnItemClick(string);
+                }
+            }
+        });
     }
 
     @Override
@@ -46,5 +59,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TempViewHolder> {
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
         }
+    }
+
+    interface OnItemClickListener {
+        void OnItemClick(String string);
     }
 }

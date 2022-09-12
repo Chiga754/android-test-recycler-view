@@ -3,6 +3,7 @@ package com.example.androidtestrecyclerview;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new Adapter();
         adapter.setStrings(strings);
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(String string) {
+                strings.remove(string);
+                adapter.notifyDataSetChanged();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
